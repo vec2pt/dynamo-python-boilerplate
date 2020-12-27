@@ -40,6 +40,7 @@ from DSCore import *
 
 # Adding reference to Revit's API DLLs
 clr.AddReference('RevitAPI')
+# import Autodesk
 from Autodesk.Revit.DB import *
 # from Autodesk.Revit.DB.Structure import *
 
@@ -57,6 +58,7 @@ from System.Collections.Generic import List
 doc = DocumentManager.Instance.CurrentDBDocument
 uiapp = DocumentManager.Instance.CurrentUIApplication
 app = DocumentManager.Instance.CurrentUIApplication.Application
+# app = uiapp.Application
 uidoc = DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument
 
 
