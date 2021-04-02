@@ -5,13 +5,25 @@ import clr
 import sys
 sys.path.append('C:\Program Files (x86)\IronPython 2.7\Lib')
 
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+
 clr.AddReference("System")
 import System
 from System import Array
 from System.Collections.Generic import List
 
-clr.AddReference('ProtoGeometry')
-from Autodesk.DesignScript.Geometry import *
+clr.AddReference("RevitAPI")
+from Autodesk.Revit.DB import *
+
+clr.AddReference("RevitAPIUI")
+from Autodesk.Revit.UI import *
+# from Autodesk.Revit.UI import Selection
+
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
 
 # clr.AddReference('DSCoreNodes')
 # from DSCore import *
@@ -20,17 +32,6 @@ clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.Elements)
 clr.ImportExtensions(Revit.GeometryConversion)
-
-clr.AddReference("RevitServices")
-import RevitServices
-from RevitServices.Persistence import DocumentManager
-from RevitServices.Transactions import TransactionManager
-
-clr.AddReference("RevitAPI")
-clr.AddReference("RevitAPIUI")
-from Autodesk.Revit.DB import *
-from Autodesk.Revit.UI import *
-# from Autodesk.Revit.UI import Selection
 
 doc = DocumentManager.Instance.CurrentDBDocument
 uiapp = DocumentManager.Instance.CurrentUIApplication
@@ -49,16 +50,14 @@ uidoc = uiapp.ActiveUIDocument
 
 dataEnteringNode = IN
 
-if isinstance(IN[0],list):
-	elems = UnwrapElement(IN[0])
-else:
-	elems = [UnwrapElement(IN[0])]
+if isinstance(IN[0],list): elems = UnwrapElement(IN[0])
+else: elems = [UnwrapElement(IN[0])]
 
-# TransactionManager.Instance.EnsureInTransaction(doc)      #Start Transaction
-# TransactionManager.Instance.TransactionTaskDone()         #End Transaction
+# TransactionManager.Instance.EnsureInTransaction(doc)
+# TransactionManager.Instance.TransactionTaskDone()
 
-# new_t = Transaction(doc)
-# new_t.Start("New Transaction")
-# new_t.Commit()
+# new_transaction = Transaction(doc)
+# new_transaction.Start("New Transaction")
+# new_transaction.Commit()
 
 OUT = elems
