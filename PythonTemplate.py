@@ -21,7 +21,6 @@ from Autodesk.Revit.UI import *
 # from Autodesk.Revit.UI import Selection
 
 clr.AddReference("RevitServices")
-import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 
@@ -37,6 +36,9 @@ doc = DocumentManager.Instance.CurrentDBDocument
 # uiapp = DocumentManager.Instance.CurrentUIApplication
 # app = uiapp.Application
 # uidoc = uiapp.ActiveUIDocument
+
+# TransactionManager.Instance.EnsureInTransaction(doc)
+# TransactionManager.Instance.TransactionTaskDone()
 
 elems = UnwrapElement(IN[0])
 
