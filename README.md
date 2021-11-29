@@ -1,2 +1,2 @@
-# revit-python-boilerplate
+# dynamo-python-boilerplate
  Python boilerplate for Dynamo.
