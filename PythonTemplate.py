@@ -30,7 +30,8 @@ from RevitServices.Transactions import TransactionManager
 clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.Elements) # ToDSType()
-clr.ImportExtensions(Revit.GeometryConversion) # ToProtoType(), ToRevitType()
+clr.ImportExtensions(Revit.GeometryConversion) # ToPoint(), ToVector(), ToProtoType(), ToXyz(), ToTransform(), ToRevitType()
+from Revit.GeometryConversion import *
 
 doc = DocumentManager.Instance.CurrentDBDocument
 # uiapp = DocumentManager.Instance.CurrentUIApplication
