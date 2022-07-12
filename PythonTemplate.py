@@ -15,6 +15,7 @@ clr.AddReference("System")
 # import System
 from System import Array
 # from System.Collections.Generic import List
+# from System.Collections.Generic import *
 
 clr.AddReference("RevitAPI")
 from Autodesk.Revit.DB import *
@@ -31,19 +32,23 @@ clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.Elements) # ToDSType()
 clr.ImportExtensions(Revit.GeometryConversion) # ToPoint(), ToVector(), ToProtoType(), ToXyz(), ToTransform(), ToRevitType()
-from Revit.GeometryConversion import *
+# from Revit.GeometryConversion import *
 
+# Dynamo
 doc = DocumentManager.Instance.CurrentDBDocument
 # uiapp = DocumentManager.Instance.CurrentUIApplication
 # app = uiapp.Application
 # uidoc = uiapp.ActiveUIDocument
 
+# RevitPythonShell / pyRevit
+# doc = __revit__.ActiveUIDocument.Document
+# uidoc = __revit__.ActiveUIDocument
 
 
 #############################################################################
 
 # Instance Elements Collector
-walls_inst = FilteredElementCollector(doc).OfClass(Wall).WhereElementIsNotElementType().ToElements()
+walls_inst = FilteredElementCollector(doc).OfClass(Wall).WhereElementIsNotElementType().ToElements() # ToElementIds(), FirstElement(), FirstElementId()
 windows_inst = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Windows).WhereElementIsNotElementType().ToElements()
 
 # Type Elements Collector
@@ -55,6 +60,11 @@ categories = List[BuiltInCategory](categories_list)
 elem_filter = ElementMulticategoryFilter(categories)
 elems_inst = FilteredElementCollector(doc).WherePasses(elem_filter).WhereElementIsNotElementType().ToElements()
 
+# Filter
+collector = FilteredElementCollector(doc)
+category_filter = ElementCategoryFilter(BuiltInCategory.OST_Doors)
+doors_inst = FilteredElementCollector(doc).WherePasses(category_filter).WhereElementIsNotElementType().ToElements()
+
 # Get parameter value
 elem.LookupParameter("Keynote").AsString()
 elem.GetParameters("Keynote")[0].AsString()
@@ -65,7 +75,7 @@ elem.LookupParameter("Keynote").Set("xxx")
 
 # Selected elements
 uidoc.Selection.GetElementIds()
-[doc.GetElement(id) for id in uidoc.Selection.GetElementIds()]
+selection = [doc.GetElement(id) for id in uidoc.Selection.GetElementIds()]
 
 # Parameters
 elem.Parameters
@@ -76,7 +86,7 @@ elem.ParametersMap # elem.ParametersMap.Contains("Keynote")
 view = doc.ActiveView
 
 # Get by ID
-doc.GetElement(id)
+elem = doc.GetElement(id)
 
 # Transaction - option 1
 TransactionManager.Instance.EnsureInTransaction(doc)
@@ -86,6 +96,16 @@ TransactionManager.Instance.TransactionTaskDone()
 new_transaction = Transaction(doc)
 new_transaction.Start("Transaction name")
 new_transaction.Commit()
+
+# Transaction / SubTransaction - option 3
+TransactionManager.Instance.EnsureInTransaction(doc)
+sub_transaction = SubTransaction()
+sub_transaction.Start()
+try:
+  sub_transaction.Commit()
+except:
+  sub_transaction.RollBack()
+TransactionManager.Instance.TransactionTaskDone()
 
 #############################################################################
 
