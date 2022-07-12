@@ -63,7 +63,7 @@ elems_inst = FilteredElementCollector(doc).WherePasses(elem_filter).WhereElement
 # Filter
 collector = FilteredElementCollector(doc)
 category_filter = ElementCategoryFilter(BuiltInCategory.OST_Doors)
-doors_inst = FilteredElementCollector(doc).WherePasses(category_filter).WhereElementIsNotElementType().ToElements()
+doors_inst = collector.WherePasses(category_filter).WhereElementIsNotElementType().ToElements()
 
 # Get parameter value
 elem.LookupParameter("Keynote").AsString()
