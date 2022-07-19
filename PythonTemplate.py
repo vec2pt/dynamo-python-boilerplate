@@ -88,6 +88,10 @@ view = doc.ActiveView
 # Get by ID
 elem = doc.GetElement(id)
 
+# Revit Command
+command_id = RevitCommandId.LookupPostableCommandId(PostableCommand.Render)
+uiapp.PostCommand(command_id)
+
 # Transaction - option 1
 TransactionManager.Instance.EnsureInTransaction(doc)
 TransactionManager.Instance.TransactionTaskDone()
