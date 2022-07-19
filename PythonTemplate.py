@@ -49,6 +49,7 @@ doc = DocumentManager.Instance.CurrentDBDocument
 
 # Instance Elements Collector
 walls_inst = FilteredElementCollector(doc).OfClass(Wall).WhereElementIsNotElementType().ToElements() # ToElementIds(), FirstElement(), FirstElementId()
+# .OfClass(clr.GetClrType(Wall))
 windows_inst = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Windows).WhereElementIsNotElementType().ToElements()
 
 # Type Elements Collector
