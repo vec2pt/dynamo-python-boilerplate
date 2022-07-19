@@ -111,6 +111,17 @@ except:
   sub_transaction.RollBack()
 TransactionManager.Instance.TransactionTaskDone()
 
+# Transaction Group
+tg = TransactionGroup(doc, "Transaction Group")
+tg.Start()
+t1 = Transaction(doc)
+t1.Start("Transaction 1")
+t1.Commit()
+t2 = Transaction(doc)
+t2.Start("Transaction 2")
+t2.Commit()
+tg.Assimilate()
+
 #############################################################################
 
 
