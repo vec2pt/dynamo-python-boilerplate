@@ -1,5 +1,5 @@
-author = "Vladyslav M"
-url = "https://github.com/vlmarch"
+author = "vec2pt"
+url = "https://github.com/vec2pt"
 
 import clr
 import sys
